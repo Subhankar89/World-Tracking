@@ -22,26 +22,38 @@ class ViewController: UIViewController {
     }
     
     @IBAction func add(_ sender: Any) {
+        /*
+         //Parent node configuration - Pyramid
+         let node = SCNNode() // a position in space
+         node.geometry = SCNPyramid(width: 0.1, height: 0.1, length: 0.1)
+         node.geometry?.firstMaterial?.specular.contents = UIColor.orange
+         node.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+         node.position = SCNVector3(x: 0.2, y: 0.3, z: -0.2)
+         self.sceneView.scene.rootNode.addChildNode(node)  // a scene is what displaying camera view of real world and root node is the origin of 3-D coordinate
+         
+         //Child node configuration - Box, whose postion is relative to Pyramid's position
+         let boxNode = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
+         boxNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+         boxNode.position = SCNVector3(0, -0.05, 0)
+         node.addChildNode(boxNode)
+         
+         //Confiuring and adding the child of the Box Node - Door Node
+         let doorNode = SCNNode(geometry: SCNPlane(width: 0.03, height: 0.06))
+         doorNode.geometry?.firstMaterial?.diffuse.contents = UIColor.brown
+         doorNode.position = SCNVector3(0,-0.02,0.053)
+         boxNode.addChildNode(doorNode) */
         
-        //Parent node configuration - Pyramid
-        let node = SCNNode() // a position in space
-        node.geometry = SCNPyramid(width: 0.1, height: 0.1, length: 0.1)
-        node.geometry?.firstMaterial?.specular.contents = UIColor.orange
-        node.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-        node.position = SCNVector3(x: 0.2, y: 0.3, z: -0.2)
-        self.sceneView.scene.rootNode.addChildNode(node)  // a scene is what displaying camera view of real world and root node is the origin of 3-D coordinate
+        let cylinder = SCNNode(geometry: SCNCylinder(radius: 0.1, height: 0.1))
+        cylinder.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        cylinder.position = SCNVector3(x: 0.2, y: 0.3, z: -0.2)
+        cylinder.eulerAngles = SCNVector3(Float(90.degreesToRadian) ,0,0) // rotation around x,y,z angles
+        self.sceneView.scene.rootNode.addChildNode(cylinder)
         
-        //Child node configuration - Box, whose postion is relative to Pyramid's position
-        let boxNode = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
-        boxNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
-        boxNode.position = SCNVector3(0, -0.05, 0)
-        node.addChildNode(boxNode)
+        let pyramid = SCNNode(geometry: SCNPyramid(width: 0.1, height: 0.1, length: 0.1))
+        pyramid.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        pyramid.position = SCNVector3(0,0,-0.3)
+        cylinder.addChildNode(pyramid)
         
-        //Confiuring and adding the child of the Box Node - Door Node
-        let doorNode = SCNNode(geometry: SCNPlane(width: 0.03, height: 0.06))
-        doorNode.geometry?.firstMaterial?.diffuse.contents = UIColor.brown
-        doorNode.position = SCNVector3(0,-0.02,0.053)
-        boxNode.addChildNode(doorNode)
     }
     
     @IBAction func reset(_ sender: Any) {
@@ -60,4 +72,7 @@ class ViewController: UIViewController {
         return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)
     }
 }
-
+//for converting to radians for rotating a plane
+extension Int{
+    var degreesToRadian: Double {return Double(self) * .pi/180}
+}
