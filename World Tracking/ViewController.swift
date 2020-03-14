@@ -22,15 +22,17 @@ class ViewController: UIViewController {
     }
 
     @IBAction func add(_ sender: Any) {
+        let cylinderNode = SCNNode(geometry: SCNCylinder(radius: 0.05, height: 0.05))
+        cylinderNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
         let node = SCNNode() // a position in space
-        node.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
+       // node.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
+        node.geometry = SCNPyramid(width: 0.1, height: 0.1, length: 0.1)
         node.geometry?.firstMaterial?.specular.contents = UIColor.white
         node.geometry?.firstMaterial?.diffuse.contents = UIColor.systemPink
-        let x = randomNumbers(firstNum: -0.3, secondNum: 0.3)
-        let y = randomNumbers(firstNum: -0.3, secondNum: 0.3)
-        let z = randomNumbers(firstNum: -0.3, secondNum: 0.3)
-        node.position = SCNVector3(x,y,z) // position the node relative to world origin (x-axis, y-axis, z-axis)
+        node.position = SCNVector3(x: 0.2, y: 0.3, z: -0.2)
+        cylinderNode.position = SCNVector3(-0.3, 0.2, -0.3)
         self.sceneView.scene.rootNode.addChildNode(node)  // a scene is what displaying camera view of real world and root node is the origin of 3-D coordinate
+        node.addChildNode(cylinderNode)
     }
     @IBAction func reset(_ sender: Any) {
         self.restartSession()
